@@ -220,6 +220,6 @@ return (
       )}
     </Wrapper>
 
-    <Widget src="ref-admin.near/widget/ZKEVMWarmUp.generage-uuid" />
+    <Widget src="ref-bigboss.near/widget/ZKEVMWarmUp.generage-uuid" />
   </Layout>
 );

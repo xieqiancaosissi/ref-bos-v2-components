@@ -233,13 +233,13 @@ function get_link(action) {
   const isSwap = arr[0].toLowerCase() === "swap";
   const isLending = ['repay', 'supply', 'borrow'].includes(arr[0].toLowerCase());
   if (isBridge) {
-    link = "/ref-admin.near/widget/ZKEVMSwap.zkevm-bridge";
+    link = "/ref-bigboss.near/widget/ZKEVMSwap.zkevm-bridge";
   }
   if (isSwap) {
-    link = "/ref-admin.near/widget/ZKEVMSwap.zkevm-swap";
+    link = "/ref-bigboss.near/widget/ZKEVMSwap.zkevm-swap";
   }
   if (isLending) {
-    link = `/ref-admin.near/widget/ZKEVM.AAVE${arr[0].toLowerCase() == 'supply' ? '': '?tab=borrow'}`;
+    link = `/ref-bigboss.near/widget/ZKEVM.AAVE${arr[0].toLowerCase() == 'supply' ? '': '?tab=borrow'}`;
   }
   return link;
 }

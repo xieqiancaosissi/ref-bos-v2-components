@@ -250,18 +250,18 @@ const isRepay = arr[0].toLowerCase() === "repay";
 const isSupply = arr[0].toLowerCase() === "supply";
 
 if (isBridge && !!state.selectClose) {
-  link = "/ref-admin.near/widget/ZKEVMSwap.zkevm-bridge";
+  link = "/ref-bigboss.near/widget/ZKEVMSwap.zkevm-bridge";
 }
 if (isSwap && !!state.selectClose) {
-  link = "/ref-admin.near/widget/ZKEVMSwap.zkevm-swap";
+  link = "/ref-bigboss.near/widget/ZKEVMSwap.zkevm-swap";
 }
 
 if ((isRepay || isBorrow) && !!state.selectClose) {
-  link = "/ref-admin.near/widget/ZKEVM.AAVE?tab=borrow";
+  link = "/ref-bigboss.near/widget/ZKEVM.AAVE?tab=borrow";
 }
 
 if (isSupply && !!state.selectClose) {
-  link = "/ref-admin.near/widget/ZKEVM.AAVE";
+  link = "/ref-bigboss.near/widget/ZKEVM.AAVE";
 }
 
 return (
@@ -292,7 +292,7 @@ return (
     </div>
 
     <Widget
-      src="ref-admin.near/widget/ZKEVMWarmUp.search-config"
+      src="ref-bigboss.near/widget/ZKEVMWarmUp.search-config"
       props={{
         onLoad: (hintList) => {
           State.update({

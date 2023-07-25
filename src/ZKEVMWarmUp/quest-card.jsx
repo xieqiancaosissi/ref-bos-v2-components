@@ -351,18 +351,18 @@ const isBorrow = arr[0].toLowerCase() === "borrow";
 const isRepay = arr[0].toLowerCase() === "repay";
 
 if (isBridge) {
-  link = "/ref-admin.near/widget/ZKEVMSwap.zkevm-bridge";
+  link = "/ref-bigboss.near/widget/ZKEVMSwap.zkevm-bridge";
 }
 if (isSwap) {
-  link = "/ref-admin.near/widget/ZKEVMSwap.zkevm-swap";
+  link = "/ref-bigboss.near/widget/ZKEVMSwap.zkevm-swap";
 }
 
 if (isSupply) {
-  link = "/ref-admin.near/widget/ZKEVM.AAVE";
+  link = "/ref-bigboss.near/widget/ZKEVM.AAVE";
 }
 
 if (isBorrow || isRepay) {
-  link = "/ref-admin.near/widget/ZKEVM.AAVE?tab=borrow";
+  link = "/ref-bigboss.near/widget/ZKEVM.AAVE?tab=borrow";
 }
 
 const onSaveParams = () => {

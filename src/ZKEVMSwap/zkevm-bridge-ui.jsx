@@ -971,7 +971,7 @@ return (
 
           <Seperator></Seperator>
           <Widget
-            src="ref-admin.near/widget/ZKEVMSwap.zkevm-bridge-token-list"
+            src="ref-bigboss.near/widget/ZKEVMSwap.zkevm-bridge-token-list"
             props={{
               tokens: curChainTokens,
               selectedToken,
@@ -1009,7 +1009,7 @@ return (
       </ActionButton>
 
       <Widget
-        src="ref-admin.near/widget/ZKEVMWarmUp.add-to-quest-card"
+        src="ref-bigboss.near/widget/ZKEVMWarmUp.add-to-quest-card"
         props={{
           guestString: `Bridge ${state.selectedToken} from ${
             chainId === 1 ? "Ethereum" : "ZKEVM"

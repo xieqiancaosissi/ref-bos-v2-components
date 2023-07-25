@@ -7,21 +7,21 @@ const Container = styled.div`
 `
 const templates = [
   {
-    src: 'ref-admin.near/widget/ZKEVMSwap.zkevm-bridge',
+    src: 'ref-bigboss.near/widget/ZKEVMSwap.zkevm-bridge',
   },
   {
-    src: 'ref-admin.near/widget/ZKEVMSwap.zkevm-swap',
+    src: 'ref-bigboss.near/widget/ZKEVMSwap.zkevm-swap',
   },
   {
-    src: 'ref-admin.near/widget/ZKEVM.GAMMA',
+    src: 'ref-bigboss.near/widget/ZKEVM.GAMMA',
   },
   {
-    src: 'ref-admin.near/widget/ZKEVM.AAVE',
+    src: 'ref-bigboss.near/widget/ZKEVM.AAVE',
   }
 ]
 return <Container>
   {
-    templates.map(({src}, index) => <Widget src="ref-admin.near/widget/ZKEVM.Template-card" key={index} props={{
+    templates.map(({src}, index) => <Widget src="ref-bigboss.near/widget/ZKEVM.Template-card" key={index} props={{
       src,
     }}/>)
   }

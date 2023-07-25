@@ -206,7 +206,7 @@ return (
       return (
         <Widget
           key={item.action_id + "-" + index}
-          src="ref-admin.near/widget/ZKEVMWarmUp.quest-card"
+          src="ref-bigboss.near/widget/ZKEVMWarmUp.quest-card"
           props={{
             item,
             onDelete: onDelete,

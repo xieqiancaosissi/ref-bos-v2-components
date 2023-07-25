@@ -223,7 +223,7 @@ const sender = Ethers.send("eth_requestAccounts", [])[0];
 
 return (
   <Wrapper>
-    <Widget src="ref-admin.near/widget/ZKEVMWarmUp.generage-uuid" />
+    <Widget src="ref-bigboss.near/widget/ZKEVMWarmUp.generage-uuid" />
 
     <div className="header">
       <div className="header-title">Participate in zkEvm easily</div>
@@ -234,7 +234,7 @@ return (
       </div>
     </div>
 
-    <Widget src="ref-admin.near/widget/ZKEVMWarmUp.input-search" />
+    <Widget src="ref-bigboss.near/widget/ZKEVMWarmUp.input-search" />
 
     <div className="quest-title-wrapper">
       <div className="quest-title">
@@ -247,7 +247,7 @@ return (
       </div>
     </div>
 
-    <Widget src="ref-admin.near/widget/ZKEVMWarmUp.quest-list" />
+    <Widget src="ref-bigboss.near/widget/ZKEVMWarmUp.quest-list" />
 
     <div className="quest-title-wrapper">
       <div className="quest-title">
@@ -255,13 +255,13 @@ return (
         Quest Trends{" "}
       </div>
 
-      <a className="view-all" href="/ref-admin.near/widget/ZKEVM.QuestionList">
+      <a className="view-all" href="/ref-bigboss.near/widget/ZKEVM.QuestionList">
         <span>View All</span>
         {ArrowRight}
       </a>
     </div>
 
-    <Widget src="ref-admin.near/widget/ZKEVMWarmUp.trend-list" />
+    <Widget src="ref-bigboss.near/widget/ZKEVMWarmUp.trend-list" />
 
     <div className="quest-title-wrapper">
       <div className="quest-title">
@@ -272,46 +272,46 @@ return (
 
     <CardListWrapper>
       <Widget
-        src="ref-admin.near/widget/ZKEVMWarmUp.hot-dapp-card"
+        src="ref-bigboss.near/widget/ZKEVMWarmUp.hot-dapp-card"
         props={{
           background: "linear-gradient(180deg, #7347DA 0%, #202445 100%)",
           dappName: "ZkEvm",
           creator: "ref-admin.near",
-          widgetSrc: "ref-admin.near/widget/ZKEVMSwap.zkevm-bridge",
+          widgetSrc: "ref-bigboss.near/widget/ZKEVMSwap.zkevm-bridge",
           src: "https://assets.ref.finance/images/zkevm-swap.png",
         }}
       />
 
       <Widget
-        src="ref-admin.near/widget/ZKEVMWarmUp.hot-dapp-card"
+        src="ref-bigboss.near/widget/ZKEVMWarmUp.hot-dapp-card"
         props={{
           background: "linear-gradient(180deg, #8C36D8 0%, #24264C 100%)",
           dappName: "ZkEvm-bridge",
           creator: "ref-admin.near",
-          widgetSrc: "ref-admin.near/widget/ZKEVMSwap.zkevm-swap",
+          widgetSrc: "ref-bigboss.near/widget/ZKEVMSwap.zkevm-swap",
           src: "https://assets.ref.finance/images/zkevm-swap.png",
         }}
       />
 
       <Widget
-        src="ref-admin.near/widget/ZKEVMWarmUp.hot-dapp-card"
+        src="ref-bigboss.near/widget/ZKEVMWarmUp.hot-dapp-card"
         props={{
           background: "linear-gradient(180deg, #895C5C 0%, #343149 100%)",
           dappName: "Gamma",
           creator: "ref-admin.near",
-          widgetSrc: "ref-admin.near/widget/ZKEVM.GAMMA",
+          widgetSrc: "ref-bigboss.near/widget/ZKEVM.GAMMA",
 
           src: "https://assets.ref.finance/images/zkevm-swap.png",
         }}
       />
 
       <Widget
-        src="ref-admin.near/widget/ZKEVMWarmUp.hot-dapp-card"
+        src="ref-bigboss.near/widget/ZKEVMWarmUp.hot-dapp-card"
         props={{
           background: "linear-gradient(180deg, #4A80A7 0%, #343149 100%)",
           dappName: "AAVE v3",
           creator: "ref-admin.near",
-          widgetSrc: "ref-admin.near/widget/ZKEVM.AAVE",
+          widgetSrc: "ref-bigboss.near/widget/ZKEVM.AAVE",
           src: "https://assets.ref.finance/images/zkevm-swap.png",
         }}
       />

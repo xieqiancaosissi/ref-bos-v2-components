@@ -21,7 +21,7 @@ return (
     {(trendList || []).map((item) => {
       return (
         <Widget
-          src="ref-admin.near/widget/ZKEVMWarmUp.trend-card"
+          src="ref-bigboss.near/widget/ZKEVMWarmUp.trend-card"
           props={{
             item,
           }}
