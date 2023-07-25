@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "bos-loader ref-admin.near -p src",
-    "deploy-mainnet": "bos components deploy sign-as ref-admin.near network-config mainnet sign-with-keychain send"
+    "start": "bos-loader ref-bigboss.near -p src",
+    "deploy-mainnet": "bos components deploy sign-as ref-bigboss.near network-config mainnet sign-with-keychain send"
   },
   "repository": {
     "type": "git",
