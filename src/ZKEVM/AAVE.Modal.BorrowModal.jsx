@@ -287,7 +287,7 @@ function borrowERC20(amount) {
     })
     .then((tx) => {
       tx.wait().then((res) => {
-        const { status, blockHash } = res;
+        const { status, transactionHash } = res;
         if (status === 1) {
           onActionSuccess({
             msg: `You borrowed ${Big(amount)
@@ -316,7 +316,7 @@ function borrowERC20(amount) {
           "account_info": "",
           "template": "AAVE",
           "action_status": status === 1 ? "Success": "Failed",
-          "tx_id": blockHash,
+          "tx_id": transactionHash,
         })
       });
     })
@@ -338,7 +338,7 @@ function borrowETH(amount) {
     )
     .then((tx) => {
       tx.wait().then((res) => {
-        const { status, blockHash } = res;
+        const { status, transactionHash } = res;
         if (status === 1) {
           onActionSuccess({
             msg: `You borrowed ${Big(amount)
@@ -367,7 +367,7 @@ function borrowETH(amount) {
           "account_info": "",
           "template": "AAVE",
           "action_status": status === 1 ? "Success": "Failed",
-          "tx_id": blockHash,
+          "tx_id": transactionHash,
         })
       });
     })
