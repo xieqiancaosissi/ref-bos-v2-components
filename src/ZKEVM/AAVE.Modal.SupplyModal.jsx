@@ -8,7 +8,6 @@ const {
   depositERC20Gas,
   formatHealthFactor,
 } = props;
-
 if (!data) {
   return <div />;
 }
@@ -168,7 +167,7 @@ function updateGas() {
 }
 
 updateGas();
-
+const questionSwitch = Storage.get("zkevm-aave-question-switch");
 function getNonce(tokenAddress, userAddress) {
   const token = new ethers.Contract(
     tokenAddress,
@@ -273,8 +272,7 @@ function depositETH(amount) {
     })
     .then((tx) => {
       tx.wait().then((res) => {
-        const { status, blockHash } = res;
-        console.log("res", res);
+        const { status, transactionHash } = res;
         if (status === 1) {
           onActionSuccess({
             msg: `You supplied ${Big(amount)
@@ -303,21 +301,22 @@ function depositETH(amount) {
           account_info: "",
           template: "AAVE",
           action_status: status === 1 ? "Success" : "Failed",
-          tx_id: blockHash,
+          tx_id: transactionHash,
         });
       });
     })
     .catch(() => State.update({ loading: false }));
 }
-
 function add_action(param_body) {
-  asyncFetch("https://bos-api.ref-finance.com/add-action-data", {
-    method: "post",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(param_body),
-  });
+  if (questionSwitch == "on") {
+    asyncFetch("https://bos-api.ref-finance.com/add-action-data", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(param_body),
+    });
+  }
 }
 
 function depositErc20(amount) {
@@ -335,7 +334,7 @@ function depositErc20(amount) {
         })
         .then((tx) => {
           tx.wait().then((res) => {
-            const { status, blockHash } = res;
+            const { status, transactionHash } = res;
             if (status === 1) {
               onActionSuccess({
                 msg: `You supplied ${Big(amount)
@@ -364,7 +363,7 @@ function depositErc20(amount) {
               account_info: "",
               template: "AAVE",
               action_status: status === 1 ? "Success" : "Failed",
-              tx_id: blockHash,
+              tx_id: transactionHash,
             });
           });
         })
