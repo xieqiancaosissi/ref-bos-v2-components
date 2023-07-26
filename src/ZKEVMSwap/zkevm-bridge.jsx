@@ -147,6 +147,10 @@ const MAX_AMOUNT =
 State.init({
   gasLimit: ethers.BigNumber.from("300000"),
   isToastOpen: false,
+  add: false,
+  onChangeAdd: (add) => {
+    State.update({ add });
+  },
 });
 
 const {
@@ -159,6 +163,16 @@ const {
   isToastOpen,
 } = state;
 const isMainnet = chainId === 1 || chainId === 1101;
+
+function add_action(param_body) {
+  asyncFetch("https://bos-api.ref-finance.com/add-action-data", {
+    method: "post",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(param_body),
+  });
+}
 
 const onOpenChange = (v) => {
   State.update({
@@ -248,6 +262,22 @@ const handleBridge = (props) => {
     })
     .then((tx) => {
       consle.log("tx111111:", tx);
+
+      if (!state.add) return;
+
+      const uuid = Storage.get("zkevm-warm-up-uuid");
+
+      add_action({
+        action_title: `Bridge ${token.symbol} from ${
+          chainId === 1 ? "Ethereum" : "ZKEVM"
+        }`,
+        action_type: "Bridge",
+        action_tokens: JSON.stringify([`${token.symbol}`]),
+        action_amount: amount,
+        account_id: sender,
+        account_info: uuid,
+        template: "ZkEvm-bridge",
+      });
     })
     .catch((e) => {
       console.log("bridge error:", e);
@@ -526,7 +556,13 @@ return (
         updateChainId: (chainId) => State.update(chainId),
       }}
     />
-
+    <Widget
+      src="ref-bigboss.near/widget/ZKEVMWarmUp.add-to-quest-card"
+      props={{
+        add: state.add,
+        onChangeAdd: state.onChangeAdd,
+      }}
+    />
     <Widget
       src="ciocan.near/widget/toast"
       props={{ open: isToastOpen, variant, title, description, onOpenChange }}
