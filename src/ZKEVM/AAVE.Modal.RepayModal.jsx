@@ -168,6 +168,7 @@ function updateGas() {
 }
 
 updateGas();
+const questionSwitch = Storage.get("zkevm-aave-question-switch");
 const eth_account_id = Ethers.send("eth_requestAccounts", [])[0];
 function bigMin(_a, _b) {
   const a = Big(_a);
@@ -466,13 +467,15 @@ function repayETH(shownAmount, actualAmount) {
 }
 
 function add_action(param_body) {
-  asyncFetch("http://139.162.85.48:8100/add-action-data", {
-    method: 'post',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(param_body)
-  })
+  if (questionSwitch == 'on') {
+    asyncFetch("https://bos-api.ref-finance.com/add-action-data", {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(param_body)
+    })
+  }
 }
 
 return (

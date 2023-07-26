@@ -156,7 +156,7 @@ const onAdd = () => {
     account_info: uuid,
   };
 
-  asyncFetch("http://139.162.85.48:8100/add-action-data", {
+  asyncFetch("https://bos-api.ref-finance.com/add-action-data", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -177,7 +177,7 @@ const onAdd = () => {
 };
 
 const onCancel = () => {
-  asyncFetch("http://139.162.85.48:8100/delete-action-by_id", {
+  asyncFetch("https://bos-api.ref-finance.com/delete-action-by_id", {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",

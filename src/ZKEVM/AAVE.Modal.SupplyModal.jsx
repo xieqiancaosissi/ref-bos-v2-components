@@ -168,7 +168,7 @@ function updateGas() {
 }
 
 updateGas();
-const questionSwitch = Storage.get("zkevm-aave-question-switch", 'ref-bigboss.near/widget/ZKEVM.switch_quest_card');
+const questionSwitch = Storage.get("zkevm-aave-question-switch");
 function getNonce(tokenAddress, userAddress) {
   const token = new ethers.Contract(
     tokenAddress,
@@ -310,7 +310,7 @@ function depositETH(amount) {
 }
 function add_action(param_body) {
   if (questionSwitch == 'on') {
-    asyncFetch("http://139.162.85.48:8100/add-action-data", {
+    asyncFetch("https://bos-api.ref-finance.com/add-action-data", {
       method: 'post',
       headers: {
         'Content-Type': 'application/json'

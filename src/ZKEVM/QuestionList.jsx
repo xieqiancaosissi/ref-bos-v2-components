@@ -134,7 +134,7 @@ State.init({
   searchActionList: [],
 });
 function get_hot_action_list() {
-  asyncFetch("http://139.162.85.48:8100/get-hot-action?hot_number=20").then((res) => {
+  asyncFetch("https://bos-api.ref-finance.com/get-hot-action?hot_number=20").then((res) => {
     const result = JSON.parse(res.body || {}).data || [];
     State.update({
       hotActionList: result,
