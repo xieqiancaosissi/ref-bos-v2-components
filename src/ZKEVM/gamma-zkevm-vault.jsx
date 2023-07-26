@@ -155,9 +155,9 @@ const TabItem = styled.div`
     font-weight:700;
     cursor: pointer;
     color:${(props) => props.isActive ? '#fff': '#7C7F96'};
-    background: ${(props) => (props.isActive ? "#272838" : "#181A27")};
+    background: ${(props) => (props.isActive ? "#181A27" : "#272838")};
     &:hover {
-        background: #272838;
+        background: #181A27;
     }    
 `;
 const MaxButton = styled.button`
