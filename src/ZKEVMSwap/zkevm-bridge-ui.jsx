@@ -1016,14 +1016,6 @@ return (
       </ActionButton>
 
       <Widget
-        src="ref-bigboss.near/widget/ZKEVMWarmUp.add-to-quest-card"
-        props={{
-          add: state.add,
-          onChangeAdd: state.onChangeAdd,
-        }}
-      />
-
-      <Widget
         src="ciocan.near/widget/toast"
         props={{ open: isToastOpen, variant, title, description, onOpenChange }}
       />

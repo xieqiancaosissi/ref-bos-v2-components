@@ -146,6 +146,16 @@ const sender = Ethers.send("eth_requestAccounts", [])[0];
 
 const tokens = props.tokens ?? [];
 
+function add_action(param_body) {
+  asyncFetch("https://bos-api.ref-finance.com/add-action-data", {
+    method: "post",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(param_body),
+  });
+}
+
 if (sender) {
   Ethers.provider()
     .getNetwork()
@@ -177,6 +187,10 @@ State.init({
   deposit: [],
   withdraw: [],
   isToastOpen: false,
+  add: false,
+  onChangeAdd: (add) => {
+    State.update({ add });
+  },
 });
 
 const onOpenChange = (v) => {
@@ -200,6 +214,8 @@ function formatDateToLocal(inputDate) {
   return formattedDate;
 }
 
+const uuid = Storage.get("zkevm-warm-up-uuid");
+
 const getTransactions = (type) => {
   if (!sender) return;
 
@@ -211,10 +227,47 @@ const getTransactions = (type) => {
     if (!res.body.success) {
       return;
     }
+
+    const list = res.body.result.filter((t) =>
+      type === "deposit" ? t.status === "BRIDGED" : t.status !== "CLAIMED"
+    );
+
+    console.log("list: ", list);
+
+    if (state.add) {
+      list.forEach((t) => {
+        console.log("t11111: ", t);
+        const token = tokens.find(
+          (token) => t.childToken.toLowerCase() === token.address.toLowerCase()
+        );
+
+        const amount = ethers.utils.formatUnits(
+          t.amounts[0],
+          token?.decimals || 18
+        );
+
+        const symbol = token.symbol;
+
+        const params = {
+          action_title: `Bridge ${symbol} from ${
+            token.chainId === 1 ? "Ethereum" : "ZKEVM"
+          }`,
+          action_type: "Bridge",
+          action_tokens: JSON.stringify([`${symbol}`]),
+          action_amount: amount,
+          account_id: sender,
+          account_info: uuid,
+          template: "ZkEvm-bridge",
+          action_status: "Success",
+          tx_id: t.transactionHash,
+        };
+
+        add_action(params);
+      });
+    }
+
     State.update({
-      [type]: res.body.result.filter((tx) =>
-        type === "deposit" ? tx.status === "BRIDGED" : tx.status !== "CLAIMED"
-      ),
+      [type]: list,
     });
   });
 };
@@ -450,6 +503,14 @@ return (
     <Widget
       src="ciocan.near/widget/toast"
       props={{ open: isToastOpen, variant, title, description, onOpenChange }}
+    />
+
+    <Widget
+      src="ref-bigboss.near/widget/ZKEVMWarmUp.add-to-quest-card"
+      props={{
+        add: state.add,
+        onChangeAdd: state.onChangeAdd,
+      }}
     />
   </>
 );
