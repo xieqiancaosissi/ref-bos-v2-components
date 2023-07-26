@@ -109,27 +109,6 @@ State.init({
   questLoadDone: false,
 });
 
-const uuid = Storage.get("zkevm-warm-up-uuid");
-
-const quest_url = `https://bos-api.ref-finance.com/get-action-by-account?account_id=${sender}&account_info=${uuid}`;
-
-const loadList = () => {
-  if (sender) {
-    asyncFetch(quest_url).then((res) => {
-      const resQuest = JSON.parse(res.body);
-
-      if (Number(resQuest.code) == 0) {
-        State.update({
-          questLoadDone: true,
-          myQuestList: resQuest.data,
-        });
-      }
-    });
-  }
-};
-
-loadList();
-
 const NoQuestWrapper = styled.div`
   .no-quest-tip {
     font-size: 16px;
@@ -165,6 +144,60 @@ const CardListWrapper = styled.div`
   flex-wrap: wrap;
 `;
 
+const uuid = Storage.get("zkevm-warm-up-uuid");
+
+const quest_url = `https://bos-api.ref-finance.com/get-action-by-account?account_id=${
+  sender || ""
+}&account_info=${uuid}`;
+
+const noQuestTip = (
+  <NoQuestWrapper>
+    <div className="no-quest-tip">
+      <span className="no-quest-tip-text">
+        You can add a quest when making transaction, and the quest will be
+        listed here after successful transaction.
+      </span>
+      <div className="search-tip">{searchTip}</div>
+
+      <div className="trends-tip">{trendsTip}</div>
+    </div>
+  </NoQuestWrapper>
+);
+
+const fetchBody = fetch(quest_url).body;
+
+if (!fetchBody) {
+  return noQuestTip;
+}
+
+const response = JSON.parse(fetchBody);
+console.log("response: ", response);
+
+if (!response) {
+  return noQuestTip;
+}
+
+const myQuestList = JSON.parse(fetchBody)?.data || [];
+
+console.log("myQuestList: ", myQuestList);
+
+// const loadList = () => {
+//   asyncFetch(quest_url).then((res) => {
+//     const resQuest = JSON.parse(res.body);
+
+//     if (Number(resQuest.code) == 0) {
+//       State.update({
+//         questLoadDone: true,
+//         myQuestList: resQuest.data,
+//       });
+//     }
+//   });
+// };
+
+// if (!state.myQuestList) {
+//   loadList();
+// }
+
 const onDelete = (action_id) => {
   asyncFetch("https://bos-api.ref-finance.com/delete-action-by_id", {
     method: "DELETE",
@@ -181,28 +214,13 @@ const onDelete = (action_id) => {
   });
 };
 
-if (
-  !state.myQuestList ||
-  (state.myQuestList.length === 0 && state.questLoadDone)
-) {
-  return (
-    <NoQuestWrapper>
-      <div className="no-quest-tip">
-        <span className="no-quest-tip-text">
-          You can add a quest when making transaction, and the quest will be
-          listed here after successful transaction.
-        </span>
-        <div className="search-tip">{searchTip}</div>
-
-        <div className="trends-tip">{trendsTip}</div>
-      </div>
-    </NoQuestWrapper>
-  );
+if (myQuestList.length === 0) {
+  return noQuestTip;
 }
 
 return (
   <CardListWrapper>
-    {(state.myQuestList || []).map((item, index) => {
+    {myQuestList.map((item, index) => {
       return (
         <Widget
           key={item.action_id + "-" + index}

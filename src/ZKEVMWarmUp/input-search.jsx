@@ -288,7 +288,16 @@ return (
           Execute
         </a>
       )}
-      {!link && <div className="input-button">Execute</div>}
+      {!link && (
+        <div
+          className="input-button"
+          style={{
+            opacity: state.selectClose ? 1 : 0.3,
+          }}
+        >
+          Execute
+        </div>
+      )}
     </div>
 
     <Widget
@@ -306,7 +315,7 @@ return (
     {!!state.text && state.hintList.length > 0 && !state.selectClose && (
       <div className="search-hint-list">
         {state.hintList.slice(0, 8).map((item) => {
-          if (!item.matched) return null;
+          if (!item.matched) return <div></div>;
           return (
             <div
               className="search-hint-item"
