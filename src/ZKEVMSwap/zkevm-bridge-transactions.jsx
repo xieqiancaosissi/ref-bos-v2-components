@@ -46,6 +46,7 @@ const Layout = styled.div`
       .info {
         display: flex;
         justify-content: space-between;
+        align-items: center;
         gap: 4px;
         width: 100%;
 
@@ -193,6 +194,12 @@ const BRIDGE_CONTRACT_ADDRESS = isMainnet
   ? "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
   : "0xF6BEEeBB578e214CA9E23B0e9683454Ff88Ed2A7";
 
+function formatDateToLocal(inputDate) {
+  const dateObj = new Date(inputDate);
+  const formattedDate = dateObj.toLocaleString(); // 使用系统默认的本地时区进行转换
+  return formattedDate;
+}
+
 const getTransactions = (type) => {
   if (!sender) return;
 
@@ -205,7 +212,9 @@ const getTransactions = (type) => {
       return;
     }
     State.update({
-      [type]: res.body.result.filter((tx) => tx.status !== "CLAIMED"),
+      [type]: res.body.result.filter((tx) =>
+        type === "deposit" ? tx.status === "BRIDGED" : tx.status !== "CLAIMED"
+      ),
     });
   });
 };
@@ -354,7 +363,7 @@ return (
                       gap: "8px",
                     }}
                   >
-                    <span class="date">{t.timestamp}</span>
+                    <span class="date">{formatDateToLocal(t.timestamp)}</span>
                     <a href={txUrl} target="_blank">
                       Tx
                     </a>
@@ -420,6 +429,13 @@ return (
                     <a href={txUrl} target="_blank">
                       Tx
                     </a>
+
+                    {/* <button
+                      disabled={isPending}
+                      onClick={() => claimTransaction(t)}
+                    >
+                      <span>Claim</span>
+                    </button> */}
                   </div>
 
                   <span>Funds will arrive in ~15 mins</span>

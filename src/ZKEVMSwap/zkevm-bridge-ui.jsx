@@ -395,6 +395,10 @@ State.init({
   balances: {},
   prices: {},
   isToastOpen: false,
+  add: false,
+  onChangeAdd: (add) => {
+    State.update({ add });
+  },
 });
 
 const switchNetwork = (chainId) => {
@@ -1011,14 +1015,8 @@ return (
       <Widget
         src="ref-bigboss.near/widget/ZKEVMWarmUp.add-to-quest-card"
         props={{
-          guestString: `Bridge ${state.selectedToken} from ${
-            chainId === 1 ? "Ethereum" : "ZKEVM"
-          }`,
-          type: "Bridge",
-          sender,
-          amount: state.amount,
-          action_tokens: [selectedToken],
-          template: "ZkEvm-bridge",
+          add: state.add,
+          onChangeAdd: state.onChangeAdd,
         }}
       />
 

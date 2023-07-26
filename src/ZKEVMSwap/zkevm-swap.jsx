@@ -113,6 +113,7 @@ State.init({
       outputAssetAmount: value === null ? "" : value.estimate,
     });
   },
+  add: false,
 });
 
 const refReferralId = props.refReferralId ?? "ukraine";
@@ -318,13 +319,6 @@ const canSwap =
   Number(state.inputAsset.balance_hr_full) >= Number(state.inputAssetAmount) &&
   Number(state.inputAssetAmount || 0) > 0 &&
   state.inputAssetTokenId !== state.outputAssetTokenId;
-
-const onCallTxComple = (tx) => {
-  console.log("transactionHash", tx);
-  State.update({
-    outputAsset: undefined,
-  });
-};
 
 const ExchangeWrapper = () => {
   return (
@@ -701,6 +695,48 @@ if (params && !!state.sender && selectedChainId === 1101) {
   Storage.set("zk-evm-swap-params", {});
 }
 
+function add_action(param_body) {
+  asyncFetch("https://bos-api.ref-finance.com/add-action-data", {
+    method: "post",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(param_body),
+  });
+}
+
+const onCallTxComple = (tx) => {
+  console.log("transactionHash", tx);
+
+  const uuid = Storage.get("zkevm-warm-up-uuid");
+  console.log("uuid: ", uuid);
+
+  if (!state.add) return;
+
+  tx.wait().then((receipt) => {
+    const { status, transactionHash } = receipt;
+
+    add_action({
+      action_title: `Swap ${state.inputAssetAmount} ${state.inputAsset.metadata.symbol} on ${selectedDex}`,
+      action_type: "Swap",
+      action_tokens: JSON.stringify([
+        `${state.inputAsset.metadata.symbol}`,
+        `${state.outputAsset.metadata.symbol}`,
+      ]),
+      action_amount: state.inputAssetAmount,
+      account_id: state.sender,
+      account_info: uuid,
+      template: "ZkEvm",
+      action_status: status === 1 ? "Success" : "Failed",
+      tx_id: transactionHash,
+    });
+
+    State.update({
+      outputAsset: undefined,
+    });
+  });
+};
+
 if (!state.sender || selectedChainId !== 1101) {
   const title = !state.sender
     ? "zkEvm Swap"
@@ -908,7 +944,9 @@ return (
                     state.callTokenApproval(
                       state,
                       () => {
-                        onCallTxComple();
+                        State.update({
+                          outputAsset: undefined,
+                        });
                         tokenInApprovaleNeededCheck();
                       },
                       undefined /* "120"*/,
@@ -932,7 +970,7 @@ return (
                           state,
                           onCallTxComple,
                           "2.09",
-                          300000,
+                          3000000,
                           "0",
                           state.estimate.path
                         );
@@ -952,15 +990,12 @@ return (
     <Widget
       src="ref-bigboss.near/widget/ZKEVMWarmUp.add-to-quest-card"
       props={{
-        guestString: `Swap ${state.inputAssetAmount} ${state.inputAsset.metadata.symbol} on ${selectedDex}`,
-        type: "Swap",
-        sender,
-        amount: state.inputAssetAmount,
-        action_tokens: [
-          state.inputAsset.metadata.symbol,
-          state.outputAsset.metadata.symbol,
-        ],
-        template: "ZkEvm",
+        add: state.add,
+        onChangeAdd: (value) => {
+          State.update({
+            add: value,
+          });
+        },
       }}
     />
   </Theme>

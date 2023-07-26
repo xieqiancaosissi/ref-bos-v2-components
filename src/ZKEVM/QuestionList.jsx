@@ -1,145 +1,146 @@
-
 const Container = styled.div`
-  .title{
-    display:flex;
-    align-items:center;
-    padding-left:0px;
-    margin-top:20px;
-    img{
-      width:28px;
-      margin-right:10px;
+  .title {
+    display: flex;
+    align-items: center;
+    padding-left: 0px;
+    margin-top: 20px;
+    img {
+      width: 28px;
+      margin-right: 10px;
     }
-    span{
-      font-size:40px;
-      color:#fff;
-      font-weight:700;
+    span {
+      font-size: 40px;
+      color: #fff;
+      font-weight: 700;
     }
   }
-  .search-area{
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-end;
-    transform:translateY(-10px);
-    .description{
-      font-size:20px;
-      color:#979ABE;
-      font-weight:500;
+  .search-area {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    transform: translateY(-10px);
+    .description {
+      font-size: 20px;
+      color: #979abe;
+      font-weight: 500;
     }
-    .search{
-      display:flex;
-      align-items:center;
-      jusitfy-content:space-between;
-      border-bottom:1px solid #373A53;
-      input{
-        font-size:20px;
-        font-weight:500;
-        color:#fff;
+    .search {
+      display: flex;
+      align-items: center;
+      jusitfy-content: space-between;
+      border-bottom: 1px solid #373a53;
+      input {
+        font-size: 20px;
+        font-weight: 500;
+        color: #fff;
         outline: none;
         background: none;
-        border:none;
-        &:focus{
-          box-shadow:none;
+        border: none;
+        &:focus {
+          box-shadow: none;
         }
       }
     }
   }
-  .noData{
+  .noData {
     display: flex;
     justify-content: center;
-    font-size:18px;
-    color:#4F5375;
-    font-weight:500;
-    margin-top:100px;
+    font-size: 18px;
+    color: #4f5375;
+    font-weight: 500;
+    margin-top: 100px;
   }
-`
+`;
 const List = styled.div`
-  display:flex;
-  flex-wrap:wrap;
-  gap:30px 20px;
-  margin-top:36px;
-  .itemDiv{
-    width:250px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px 20px;
+  margin-top: 36px;
+  .itemDiv {
+    width: 250px;
   }
-`
+`;
 
 const ListItem = styled.div`
-   width:250px;
-  .body{
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    height:108px;
-    border-radius:20px;
-    background-color:#373A53;
-    padding:12px 20px;
-    &:hover{
-      text-decoration:none;
-     }
-    .item-title{
-      font-size:16px;
-      color:#fff;
-      font-weight:700;
-      flex-wrap:wrap;
-      text-align:center;
-      .num{
-        font-size:14px;
-        color:#979ABE;
-        margin:0 3px;
+  width: 250px;
+  .body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 108px;
+    border-radius: 20px;
+    background-color: #373a53;
+    padding: 12px 20px;
+    &:hover {
+      text-decoration: none;
+    }
+    .item-title {
+      font-size: 16px;
+      color: #fff;
+      font-weight: 700;
+      flex-wrap: wrap;
+      text-align: center;
+      .num {
+        font-size: 14px;
+        color: #979abe;
+        margin: 0 3px;
       }
     }
-    .platform{
-      margin-top:8px;
-      img{
-        width:26px;
-        height:26px;
-        margin-right:5px;
+    .platform {
+      margin-top: 8px;
+      img {
+        width: 26px;
+        height: 26px;
+        margin-right: 5px;
       }
-      span{
-        font-size:14px;
-        color:#979ABE;
+      span {
+        font-size: 14px;
+        color: #979abe;
       }
     }
   }
-  .foot{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    font-size:14px;
-    color:#979ABE;
-    margin-top:12px;
-    padding:0 12px;
+  .foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #979abe;
+    margin-top: 12px;
+    padding: 0 12px;
   }
-`
+`;
 
 const Back = styled.a`
-  display:flex;
-  align-items:center;
-  img{
-    margin-right:14px;
-    cursor:pointer;
+  display: flex;
+  align-items: center;
+  img {
+    margin-right: 14px;
+    cursor: pointer;
   }
-  span{
-    color:#979ABE;
-    font-size:18px;
-    font-weight:500;
-    cursor:pointer;
+  span {
+    color: #979abe;
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
   }
-  &:hover{
-    text-decoration:none;
+  &:hover {
+    text-decoration: none;
   }
-`
+`;
 State.init({
   hotActionList: [],
   searchActionList: [],
 });
 function get_hot_action_list() {
-  asyncFetch("http://139.162.85.48:8100/get-hot-action?hot_number=20").then((res) => {
+  asyncFetch(
+    "https://bos-api.ref-finance.com/get-hot-action?hot_number=20"
+  ).then((res) => {
     const result = JSON.parse(res.body || {}).data || [];
     State.update({
       hotActionList: result,
       searchActionList: result,
-    })
+    });
   });
 }
 if (state.hotActionList.length == 0) {
@@ -151,26 +152,32 @@ function searchBykeyWords(e) {
   const search_result = state.hotActionList.filter((action) => {
     const { action_title } = action;
     return action_title.toLowerCase().includes(value);
-  })
+  });
   State.update({
-    searchActionList: search_result
-  })
-  
+    searchActionList: search_result,
+  });
 }
 function get_item_title(action) {
   const { action_title } = action;
-  const arr = action_title.split(' ');
+  const arr = action_title.split(" ");
   if (Number(arr[1])) {
-    return <>{arr[0]} <label className="num">{arr[1]}</label> {arr.slice(2).join(' ')} </>
+    return (
+      <>
+        {arr[0]} <label className="num">{arr[1]}</label>{" "}
+        {arr.slice(2).join(" ")}{" "}
+      </>
+    );
   } else {
-    return action_title
+    return action_title;
   }
 }
 const template_icons = {
-  'ZkEvm': 'https://ipfs.near.social/ipfs/bafkreiftqxncp4pt36z5mcfzizbkccoufksmz2f4zhnproxv4krfb5qmsm',
-  'ZkEvm-bridge': 'https://ipfs.near.social/ipfs/bafkreigu2kdqzug45li74xcdhokazx7gv2yopml6x5bwrnjrkx2qsjrsni',
-  'AAVE': 'https://ipfs.near.social/ipfs/bafkreibveumzusupe5rvk4nffzdipquvatfg5lagg7c6jaor2b3hgigw5e'
-}
+  ZkEvm:
+    "https://ipfs.near.social/ipfs/bafkreiftqxncp4pt36z5mcfzizbkccoufksmz2f4zhnproxv4krfb5qmsm",
+  "ZkEvm-bridge":
+    "https://ipfs.near.social/ipfs/bafkreigu2kdqzug45li74xcdhokazx7gv2yopml6x5bwrnjrkx2qsjrsni",
+  AAVE: "https://ipfs.near.social/ipfs/bafkreibveumzusupe5rvk4nffzdipquvatfg5lagg7c6jaor2b3hgigw5e",
+};
 
 const SwapTokens = [
   {
@@ -231,7 +238,9 @@ function get_link(action) {
   const arr = action.action_title.split(/\s+/);
   const isBridge = arr[0].toLowerCase() === "bridge";
   const isSwap = arr[0].toLowerCase() === "swap";
-  const isLending = ['repay', 'supply', 'borrow'].includes(arr[0].toLowerCase());
+  const isLending = ["repay", "supply", "borrow"].includes(
+    arr[0].toLowerCase()
+  );
   if (isBridge) {
     link = "/ref-bigboss.near/widget/ZKEVMSwap.zkevm-bridge";
   }
@@ -239,7 +248,9 @@ function get_link(action) {
     link = "/ref-bigboss.near/widget/ZKEVMSwap.zkevm-swap";
   }
   if (isLending) {
-    link = `/ref-bigboss.near/widget/ZKEVM.AAVE${arr[0].toLowerCase() == 'supply' ? '': '?tab=borrow'}`;
+    link = `/ref-bigboss.near/widget/ZKEVM.AAVE${
+      arr[0].toLowerCase() == "supply" ? "" : "?tab=borrow"
+    }`;
   }
   return link;
 }
@@ -270,47 +281,46 @@ function onSaveParams(action) {
     // console.log('amount, symbol, dexName, assetId', amount, symbol, dexName1 + (dexName2 ? " " + dexName2 : ""), token.address);
   }
 }
-return <Container>
- <Back href="/warmup">
-   <img src="https://ipfs.near.social/ipfs/bafkreig7ezlwthp2u6gsoifpvbsjcepuyvtx33uyjaentqwvcoh64unvd4"></img>
-   <span>Back</span>
- </Back>
-  <div className="title">
-    <img src="https://ipfs.near.social/ipfs/bafkreiaerml7c2sfbojxg64lms25qappcgoevsrfmquxagfbowhm45gyey"></img>
-    <span>Quest Trends</span>
-  </div>
-  <div className="search-area">
-    <div className="description">Top 20 quest by users</div>
-    <div className="search">
-      <input onChange={searchBykeyWords}></input>
-      <img src="https://ipfs.near.social/ipfs/bafkreia4oaaolx3jppkacw3rqxqtn66imuleqghejdq5xopmxjhtxflibm"></img>
+return (
+  <Container>
+    <Back href="/warmup">
+      <img src="https://ipfs.near.social/ipfs/bafkreig7ezlwthp2u6gsoifpvbsjcepuyvtx33uyjaentqwvcoh64unvd4"></img>
+      <span>Back</span>
+    </Back>
+    <div className="title">
+      <img src="https://ipfs.near.social/ipfs/bafkreiaerml7c2sfbojxg64lms25qappcgoevsrfmquxagfbowhm45gyey"></img>
+      <span>Quest Trends</span>
     </div>
-   </div>
-   <List>
-       {
-        state.searchActionList.map((action) => {
-          return <ListItem>
+    <div className="search-area">
+      <div className="description">Top 20 quest by users</div>
+      <div className="search">
+        <input onChange={searchBykeyWords}></input>
+        <img src="https://ipfs.near.social/ipfs/bafkreia4oaaolx3jppkacw3rqxqtn66imuleqghejdq5xopmxjhtxflibm"></img>
+      </div>
+    </div>
+    <List>
+      {state.searchActionList.map((action) => {
+        return (
+          <ListItem>
             <div className="itemDiv" onClick={() => onSaveParams(action)}>
-              <a className="body" href={get_link(action)} >
-                  <div className="item-title">
-                    {get_item_title(action)}
-                  </div>
-                  <div className="platform">
-                    <img src={template_icons[action.template]}></img>
-                    <span>{action.template}</span>
-                  </div>
+              <a className="body" href={get_link(action)}>
+                <div className="item-title">{get_item_title(action)}</div>
+                <div className="platform">
+                  <img src={template_icons[action.template]}></img>
+                  <span>{action.template}</span>
+                </div>
               </a>
             </div>
             <div className="foot">
-                <span>Total Execution</span>
-                <span>{action.count_number}</span>
+              <span>Total Execution</span>
+              <span>{action.count_number}</span>
             </div>
           </ListItem>
-        })
-       }
-      
-   </List>
-   {
-      state.searchActionList.length == 0 ? <p className="noData">No result found</p>:null
-   }
-</Container>
+        );
+      })}
+    </List>
+    {state.searchActionList.length == 0 ? (
+      <p className="noData">No result found</p>
+    ) : null}
+  </Container>
+);

@@ -36,16 +36,16 @@ const BorrowContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  .splitDiv{
-    height:1px;
-   .splitLine{
-     position:absolute;
-     left:0;
-     right:0;
-     width:100%;
-     border-top:1px solid #332C4B;
-   }
- }
+  .splitDiv {
+    height: 1px;
+    .splitLine {
+      position: absolute;
+      left: 0;
+      right: 0;
+      width: 100%;
+      border-top: 1px solid #332c4b;
+    }
+  }
 `;
 
 const TokenTexture = styled.div`
@@ -64,10 +64,10 @@ const TokenWrapper = styled.div`
 const GrayTexture = styled.div`
   font-size: 12px;
   font-weight: 500;
-  color: #7C7F96;
-  .balanceValue{
-    text-decoration:underline;
-    cursor:pointer;
+  color: #7c7f96;
+  .balanceValue {
+    text-decoration: underline;
+    cursor: pointer;
   }
 `;
 
@@ -95,8 +95,8 @@ const WhiteTexture = styled.div`
 `;
 const DeepPurpleTexture = styled.div`
   font-size: 14px;
-  color: #7C7F96;
-`
+  color: #7c7f96;
+`;
 const TransactionOverviewContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -130,20 +130,20 @@ const Max = styled.span`
 `;
 
 const InputContainer = styled.div`
-   display: flex;
-   justify-content: space-between;
-   align-items:center;
-   background-color:rgba(53, 55, 73, 0.5);
-   height:55px;
-   border-radius:10px;
-   padding:0 12px;
-`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(53, 55, 73, 0.5);
+  height: 55px;
+  border-radius: 10px;
+  padding: 0 12px;
+`;
 const BalanceContainer = styled.div`
-   display: flex;
-   justify-content: space-between;
-   align-items:center;  
-   margin-top:10px;
-`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+`;
 
 State.init({
   amount: "",
@@ -308,16 +308,16 @@ function borrowERC20(amount) {
           });
         }
         add_action({
-          "action_title": `Borrow ${symbol} on AAVE`,
-          "action_type": "Borrow",
-          "action_tokens": JSON.stringify([`${symbol}`]),
-          "action_amount": null,
-          "account_id": eth_account_id,
-          "account_info": "",
-          "template": "AAVE",
-          "action_status": status === 1 ? "Success": "Failed",
-          "tx_id": blockHash,
-        })
+          action_title: `Borrow ${symbol} on AAVE`,
+          action_type: "Borrow",
+          action_tokens: JSON.stringify([`${symbol}`]),
+          action_amount: null,
+          account_id: eth_account_id,
+          account_info: "",
+          template: "AAVE",
+          action_status: status === 1 ? "Success" : "Failed",
+          tx_id: blockHash,
+        });
       });
     })
     .catch(() => State.update({ loading: false }));
@@ -359,29 +359,29 @@ function borrowETH(amount) {
           });
         }
         add_action({
-          "action_title": `Borrow ${symbol} on AAVE`,
-          "action_type": "Borrow",
-          "action_tokens": JSON.stringify([`${symbol}`]),
-          "action_amount": null,
-          "account_id": eth_account_id,
-          "account_info": "",
-          "template": "AAVE",
-          "action_status": status === 1 ? "Success": "Failed",
-          "tx_id": blockHash,
-        })
+          action_title: `Borrow ${symbol} on AAVE`,
+          action_type: "Borrow",
+          action_tokens: JSON.stringify([`${symbol}`]),
+          action_amount: null,
+          account_id: eth_account_id,
+          account_info: "",
+          template: "AAVE",
+          action_status: status === 1 ? "Success" : "Failed",
+          tx_id: blockHash,
+        });
       });
     })
     .catch(() => State.update({ loading: false }));
 }
 
 function add_action(param_body) {
-  asyncFetch("http://139.162.85.48:8100/add-action-data", {
-    method: 'post',
+  asyncFetch("https://bos-api.ref-finance.com/add-action-data", {
+    method: "post",
     headers: {
-      'Content-Type': 'application/json'
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify(param_body)
-  })
+    body: JSON.stringify(param_body),
+  });
 }
 
 function update() {
@@ -428,8 +428,8 @@ return (
                 config,
                 children: (
                   <>
-                  <InputContainer>
-                    <TokenTexture>
+                    <InputContainer>
+                      <TokenTexture>
                         <Input
                           type="number"
                           value={state.amount}
@@ -447,25 +447,29 @@ return (
                         />
                         <TokenTexture>{symbol}</TokenTexture>
                       </TokenWrapper>
-                  </InputContainer>
-                  <BalanceContainer>
-                    <GrayTexture>${state.amountInUSD}</GrayTexture>,
-                    <GrayTexture>
-                      Available:{" "}
-                      <span onClick={() => {
-                          changeValue(maxValue);
-                        }} className="balanceValue">{isValid(availableBorrows) &&
-                      availableBorrows !== "-"
-                        ? Big(availableBorrows).toFixed(7)
-                        : availableBorrows}</span>
-                    </GrayTexture>
-                  </BalanceContainer>
+                    </InputContainer>
+                    <BalanceContainer>
+                      <GrayTexture>${state.amountInUSD}</GrayTexture>,
+                      <GrayTexture>
+                        Available:{" "}
+                        <span
+                          onClick={() => {
+                            changeValue(maxValue);
+                          }}
+                          className="balanceValue"
+                        >
+                          {isValid(availableBorrows) && availableBorrows !== "-"
+                            ? Big(availableBorrows).toFixed(7)
+                            : availableBorrows}
+                        </span>
+                      </GrayTexture>
+                    </BalanceContainer>
                   </>
                 ),
               }}
             />
             <div className="splitDiv">
-               <div className="splitLine"></div>
+              <div className="splitLine"></div>
             </div>
             <Widget
               src={`ref-bigboss.near/widget/ZKEVM.AAVE.Modal.RoundedCard`}
@@ -502,12 +506,14 @@ return (
               }}
             />
             <div className="splitDiv">
-               <div className="splitLine"></div>
+              <div className="splitLine"></div>
             </div>
-            <div style={{
-              display:'flex',
-              justifyContent:'flex-end'
-            }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "flex-end",
+              }}
+            >
               <Widget
                 src={`${config.ownerId}/widget/AAVE.GasEstimation`}
                 props={{ gas: state.gas, config }}

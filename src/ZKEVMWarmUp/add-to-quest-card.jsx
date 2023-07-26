@@ -125,73 +125,18 @@ const Wrapper = styled.div`
   }
 `;
 
-const { guestString, type, sender, amount, action_tokens, template } = props;
-
 State.init({
   add: false,
-  preGuest: "",
-  preAmount: "",
 });
 
-if (guestString !== state.preGuest || amount !== state.preAmount) {
-  State.update({
-    preGuest: guestString,
-    preAmount: amount,
-    add: false,
-  });
-}
+const { add, onChangeAdd } = props;
 
 const onAdd = () => {
-  const uuid = Storage.get("zkevm-warm-up-uuid");
-
-  const [action_type, action_token, from, dexName] = guestString.split(" ");
-
-  const params = {
-    action_title: guestString,
-    action_type: action_type,
-    action_tokens: JSON.stringify([action_tokens]),
-    action_amount: amount || "0",
-    account_id: sender,
-    template,
-    account_info: uuid,
-  };
-
-  asyncFetch("http://139.162.85.48:8100/add-action-data", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(params),
-  }).then((res) => {
-    console.log("res: ", res);
-
-    const resJson = JSON.parse(res.body);
-
-    if (res.status === 200) {
-      State.update({
-        add: true,
-        action_id: resJson.data,
-      });
-    }
-  });
+  onChangeAdd(true);
 };
 
 const onCancel = () => {
-  asyncFetch("http://139.162.85.48:8100/delete-action-by_id", {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      action_id: state.action_id,
-    }),
-  }).then((res) => {
-    if (res.status === 200) {
-      State.update({
-        add: false,
-      });
-    }
-  });
+  onChangeAdd(false);
 };
 
 return (
@@ -207,13 +152,13 @@ return (
         after successful transaction
       </div>
 
-      {!state.add && (
+      {!add && (
         <div className="button-dark" onClick={onAdd}>
           <div className="button-dark-circle"></div>
         </div>
       )}
 
-      {state.add && (
+      {add && (
         <div className="button-light" onClick={onCancel}>
           <div className="button-light-circle"></div>
         </div>

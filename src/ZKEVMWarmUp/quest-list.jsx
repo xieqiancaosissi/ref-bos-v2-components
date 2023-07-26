@@ -111,7 +111,7 @@ State.init({
 
 const uuid = Storage.get("zkevm-warm-up-uuid");
 
-const quest_url = `http://139.162.85.48:8100/get-action-by-account?account_id=${sender}&account_info=${uuid}`;
+const quest_url = `https://bos-api.ref-finance.com/get-action-by-account?account_id=${sender}&account_info=${uuid}`;
 
 const loadList = () => {
   if (sender) {
@@ -166,7 +166,7 @@ const CardListWrapper = styled.div`
 `;
 
 const onDelete = (action_id) => {
-  asyncFetch("http://139.162.85.48:8100/delete-action-by_id", {
+  asyncFetch("https://bos-api.ref-finance.com/delete-action-by_id", {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",

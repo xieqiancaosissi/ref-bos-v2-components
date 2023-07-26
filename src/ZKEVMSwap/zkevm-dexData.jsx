@@ -689,7 +689,7 @@ const callTxPancakeZKEVM2 = (
       .getSigner()
       .sendTransaction(txArgs)
       .then((transactionHash) => {
-        console.log(transactionHash);
+        onComplete(transactionHash);
       })
       .catch(() => {});
 

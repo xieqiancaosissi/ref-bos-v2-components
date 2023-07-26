@@ -6,7 +6,7 @@ const CardListWrapper = styled.div`
 
 const sender = Ethers.send("eth_requestAccounts", [])[0];
 
-const trend_url = "http://139.162.85.48:8100/get-hot-action";
+const trend_url = "https://bos-api.ref-finance.com/get-hot-action";
 
 let trendList = [];
 
