@@ -520,21 +520,21 @@ const onUpdateToken = (props) => {
   setNonce(props);
 };
 
-// if (!sender) {
-//   return (
-//     <Widget
-//       src="ref-bigboss.near/widget/ZKEVMSwap.zkevm-connect"
-//       props={{
-//         title: "zkEvm-Ethereum Bridge",
-//         src: "https://assets.ref.finance/images/zkevm-bridge.png",
-//         imgStyle: {
-//           width: "403px",
-//           height: "93px",
-//         },
-//       }}
-//     />
-//   );
-// }
+if (!sender) {
+  return (
+    <Widget
+      src="ref-bigboss.near/widget/ZKEVMSwap.zkevm-connect"
+      props={{
+        title: "zkEvm-Ethereum Bridge",
+        src: "https://assets.ref.finance/images/zkevm-bridge.png",
+        imgStyle: {
+          width: "403px",
+          height: "93px",
+        },
+      }}
+    />
+  );
+}
 if (chainId === undefined) return <div />;
 
 return (
