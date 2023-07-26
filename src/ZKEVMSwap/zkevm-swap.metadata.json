@@ -4,8 +4,8 @@
   },
   "name": "Polygon ZkEvm Dex",
   "tags": {
-    "polygon-zkevm": "",
     "dex": "",
-    "trading": ""
+    "trading": "",
+    "polygon-zkevm": ""
   }
 }
