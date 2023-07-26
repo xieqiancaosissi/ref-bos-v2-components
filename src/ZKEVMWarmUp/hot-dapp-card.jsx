@@ -1,7 +1,7 @@
 const { background, src, dappName, creator, widgetPath, widgetSrc } = props;
 
 const DappCardWrapper = styled.a`
-  padding: 20px;
+  padding: 20px 8px;
   display: flex;
   align-items: center;
 
@@ -9,7 +9,7 @@ const DappCardWrapper = styled.a`
     text-decoration: none;
   }
 
-  gap: 10px;
+  gap: 6px;
   width: 248px;
   height: 108px;
   border-radius: 20px;
@@ -33,7 +33,7 @@ const DappCardWrapper = styled.a`
     letter-spacing: 0em;
     text-align: left;
     color: #ffffff;
-    white-space: nowrap;
+    /* white-space: nowrap; */
   }
 
   .dapp-creator {

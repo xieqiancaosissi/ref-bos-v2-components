@@ -138,6 +138,8 @@ const onDexDataLoad = (data) => {
     ...data,
     forceReload: false,
     sender: getEVMAccountId(),
+    inputAsset: undefined,
+    outputAsset: undefined,
   });
 };
 

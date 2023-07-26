@@ -538,7 +538,10 @@ const changeNetwork = (network) => {
       switchNetwork(1);
     }
   }
-  State.update({ isNetworkSelectOpen: 0, selectedNetwork: network });
+  State.update({
+    isNetworkSelectOpen: 0,
+    selectedNetwork: network,
+  });
 };
 
 const openNetworkList = (tag) => {

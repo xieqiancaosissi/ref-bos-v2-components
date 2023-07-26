@@ -305,7 +305,7 @@ return (
 
     {!!state.text && state.hintList.length > 0 && !state.selectClose && (
       <div className="search-hint-list">
-        {state.hintList.map((item) => {
+        {state.hintList.slice(0, 8).map((item) => {
           if (!item.matched) return null;
           return (
             <div

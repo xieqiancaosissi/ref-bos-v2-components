@@ -18,7 +18,7 @@ State.init({ loadComplete: false });
 
 if (forceReload) {
   State.update({
-    orceReload: false,
+    forceReload: false,
     factoryAbi: undefined,
     erc20Abi: undefined,
     routerAbi: undefined,
