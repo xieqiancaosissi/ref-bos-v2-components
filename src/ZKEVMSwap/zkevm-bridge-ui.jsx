@@ -1,5 +1,7 @@
 const DeskLayout = styled.div`
   height: 100vh;
+
+  /* The scrollbar track */
 `;
 
 const Layout = styled.div`
@@ -46,6 +48,15 @@ const Layout = styled.div`
     border: 1px solid rgba(255, 255, 255, 0.1);
     margin-left: 8px;
     margin-right: 8px;
+  }
+
+  .invalid-balance-tip {
+    color: #ff61d3;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 22px;
+    letter-spacing: 0em;
+    text-align: left;
   }
 
   .info {
@@ -1019,6 +1030,19 @@ return (
           />
         </div>
       </SendWrapper>
+      {!!state.amount &&
+        Number(state.amount) !== "NaN" &&
+        Object.keys(balances).length > 0 &&
+        new Big(Number(state.amount) === "NaN" ? 0 : state.amount || 0).gt(
+          balances[selectedToken]
+        ) &&
+        new Big(Number(state.amount) === "NaN" ? 0 : state.amount || 0).gt(
+          new Big(0)
+        ) && (
+          <div className="invalid-balance-tip">
+            Invalid amount! Amount should be less than token balance
+          </div>
+        )}
 
       <ReceiveWrapper>
         <span>Receive</span>

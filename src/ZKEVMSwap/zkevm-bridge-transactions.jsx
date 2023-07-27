@@ -146,6 +146,23 @@ const sender = Ethers.send("eth_requestAccounts", [])[0];
 
 const tokens = props.tokens ?? [];
 
+const arrowUp = (
+  <svg
+    width="17"
+    height="10"
+    viewBox="0 0 17 10"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M1 8.5L8.5 2L16 8.5"
+      stroke="#8C7EBD"
+      stroke-width="2"
+      stroke-linecap="round"
+    />
+  </svg>
+);
+
 function add_action(param_body) {
   asyncFetch("https://bos-api.ref-finance.com/add-action-data", {
     method: "post",
@@ -191,6 +208,8 @@ State.init({
   onChangeAdd: (add) => {
     State.update({ add });
   },
+
+  showPending: true,
 });
 
 const onOpenChange = (v) => {
@@ -320,7 +339,14 @@ return (
           width: "100%",
         }}
       >
-        <span>
+        <span
+          className=""
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "3px",
+          }}
+        >
           {pendingIcon}
 
           {(withdraw?.length || 0) + (deposit?.length || 0)}
@@ -329,7 +355,22 @@ return (
               color: "#8C7EBD",
             }}
           >
-            Pending transaction
+            Pending transactions
+          </span>
+          {(withdraw?.length || 0) + (deposit?.length || 0) > 0}
+          <span
+            style={{
+              transform: !state.showPending ? "rotate(180deg)" : "rotate(0deg)",
+              marginLeft: "8px",
+              cursor: "pointer",
+            }}
+            onClick={() => {
+              State.update({
+                showPending: !state.showPending,
+              });
+            }}
+          >
+            {arrowUp}
           </span>
         </span>
 
@@ -338,132 +379,135 @@ return (
         </button>
       </div>
 
-      <ul>
-        {/* {!noWithdrawls && <div>Withdrawls:</div>} */}
-        {withdraw.map((t) => {
-          const txUrl = `https://${
-            isMainnet ? "" : "testnet-"
-          }zkevm.polygonscan.com/tx/${t.transactionHash}`;
+      {state.showPending && (
+        <ul>
+          {/* {!noWithdrawls && <div>Withdrawls:</div>} */}
+          {withdraw.map((t) => {
+            const txUrl = `https://${
+              isMainnet ? "" : "testnet-"
+            }zkevm.polygonscan.com/tx/${t.transactionHash}`;
 
-          const token = tokens.find(
-            (token) =>
-              t.childToken.toLowerCase() === token.address.toLowerCase()
-          );
+            const token = tokens.find(
+              (token) =>
+                t.childToken.toLowerCase() === token.address.toLowerCase()
+            );
 
-          if (!token) return null;
+            if (!token) return null;
 
-          const amount = ethers.utils.formatUnits(
-            t.amounts[0],
-            token?.decimals || 18
-          );
+            const amount = ethers.utils.formatUnits(
+              t.amounts[0],
+              token?.decimals || 18
+            );
 
-          const isPending = t.status === "BRIDGED";
+            const isPending = t.status === "BRIDGED";
 
-          return (
-            <li>
-              <div class="info">
-                <span class="token">
-                  {amount} {token?.symbol}
-                </span>
+            return (
+              <li>
+                <div class="info">
+                  <span class="token">
+                    {amount} {token?.symbol}
+                  </span>
 
-                <div
-                  style={{
-                    fontSize: "14px",
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "8px",
-                    alignItems: "end",
-                  }}
-                >
                   <div
                     style={{
+                      fontSize: "14px",
                       display: "flex",
-                      alignItems: "center",
+                      flexDirection: "column",
                       gap: "8px",
+                      alignItems: "end",
                     }}
                   >
-                    <span class="date">{formatDateToLocal(t.timestamp)}</span>
-                    <a href={txUrl} target="_blank">
-                      Tx
-                    </a>
-
-                    <button
-                      disabled={isPending}
-                      onClick={() => claimTransaction(t)}
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "8px",
+                      }}
                     >
-                      <span>Claim</span>
-                    </button>
+                      <span class="date">{formatDateToLocal(t.timestamp)}</span>
+                      <a href={txUrl} target="_blank">
+                        Tx
+                      </a>
+
+                      <button
+                        disabled={isPending}
+                        onClick={() => claimTransaction(t)}
+                      >
+                        <span>Claim</span>
+                      </button>
+                    </div>
+
+                    {isPending && <span>(pending... arrive in ~60 mins)</span>}
                   </div>
-
-                  {isPending && <span>(pending... arrive in ~60 mins)</span>}
                 </div>
-              </div>
-            </li>
-          );
-        })}
+              </li>
+            );
+          })}
 
-        {/* {!noDeposits && <div>Deposits:</div>} */}
+          {/* {!noDeposits && <div>Deposits:</div>} */}
 
-        {deposit.map((t) => {
-          const txUrl = `https://${isMainnet ? "" : "goerli."}etherscan.io/tx/${
-            t.transactionHash
-          }`;
+          {deposit.map((t) => {
+            const txUrl = `https://${
+              isMainnet ? "" : "goerli."
+            }etherscan.io/tx/${t.transactionHash}`;
 
-          const token = tokens.find(
-            (token) => t.rootToken.toLowerCase() === token.address.toLowerCase()
-          );
+            const token = tokens.find(
+              (token) =>
+                t.rootToken.toLowerCase() === token.address.toLowerCase()
+            );
 
-          if (!token) return null;
+            if (!token) return null;
 
-          const amount = ethers.utils.formatUnits(
-            t.amounts[0],
-            token?.decimals || 18
-          );
+            const amount = ethers.utils.formatUnits(
+              t.amounts[0],
+              token?.decimals || 18
+            );
 
-          return (
-            <li>
-              <div class="info">
-                <span class="token">
-                  {amount} {token?.symbol}
-                </span>
+            return (
+              <li>
+                <div class="info">
+                  <span class="token">
+                    {amount} {token?.symbol}
+                  </span>
 
-                <div
-                  style={{
-                    fontSize: "14px",
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "8px",
-                    alignItems: "end",
-                  }}
-                >
                   <div
                     style={{
+                      fontSize: "14px",
                       display: "flex",
-                      alignItems: "center",
+                      flexDirection: "column",
                       gap: "8px",
+                      alignItems: "end",
                     }}
                   >
-                    <span class="date">{t.timestamp}</span>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "8px",
+                      }}
+                    >
+                      <span class="date">{t.timestamp}</span>
 
-                    <a href={txUrl} target="_blank">
-                      Tx
-                    </a>
+                      <a href={txUrl} target="_blank">
+                        Tx
+                      </a>
 
-                    {/* <button
+                      {/* <button
                       disabled={isPending}
                       onClick={() => claimTransaction(t)}
                     >
                       <span>Claim</span>
                     </button> */}
-                  </div>
+                    </div>
 
-                  <span>Funds will arrive in ~15 mins</span>
+                    <span>Funds will arrive in ~15 mins</span>
+                  </div>
                 </div>
-              </div>
-            </li>
-          );
-        })}
-      </ul>
+              </li>
+            );
+          })}
+        </ul>
+      )}
     </Layout>
 
     <Widget

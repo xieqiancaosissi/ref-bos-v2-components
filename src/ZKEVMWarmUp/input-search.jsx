@@ -210,11 +210,13 @@ State.init({
 let link = "";
 
 const onSaveParams = (text) => {
+  console.log("text: ", text);
   const arr = text.split(/\s+/);
 
   const isBridge = arr[0].toLowerCase() === "bridge";
 
   const isSwap = arr[0].toLowerCase() === "swap";
+  console.log("isSwap: ", isSwap, isBridge);
 
   if (isBridge) {
     const [action_type, symbol, from, chain] = arr;
@@ -227,17 +229,27 @@ const onSaveParams = (text) => {
 
   if (isSwap) {
     const [action_type, amount, symbol, on, dexName] = arr;
+    console.log("action_type: ", action_type);
 
     Storage.set("zk-evm-swap-params", {
       amount,
       symbol,
-      dexName: state.dexName,
-      assetId: state.assetId,
+      dexName: state.dexName || dexName,
+      assetId: state.assetId || state.hintList[0].address,
     });
   }
 };
 
-const arr = state.text.split(/\s+/);
+const parseString =
+  state?.hintList?.length === 1 ? state.hintList[0].full : state.text;
+
+if (state?.hintList?.length === 1) {
+  console.log("state.hintList[0].full: ", state.hintList[0].full);
+
+  onSaveParams(state.hintList[0].full);
+}
+
+const arr = parseString.split(/\s+/);
 
 const isBridge = arr[0].toLowerCase() === "bridge";
 
@@ -249,18 +261,21 @@ const isRepay = arr[0].toLowerCase() === "repay";
 
 const isSupply = arr[0].toLowerCase() === "supply";
 
-if (isBridge && !!state.selectClose) {
+if (isBridge && (!!state.selectClose || state?.hintList?.length === 1)) {
   link = "/ref-bigboss.near/widget/ZKEVMSwap.zkevm-bridge";
 }
-if (isSwap && !!state.selectClose) {
+if (isSwap && (!!state.selectClose || state?.hintList?.length === 1)) {
   link = "/ref-bigboss.near/widget/ZKEVMSwap.zkevm-swap";
 }
 
-if ((isRepay || isBorrow) && !!state.selectClose) {
+if (
+  (isRepay || isBorrow) &&
+  (!!state.selectClose || state?.hintList?.length === 1)
+) {
   link = "/ref-bigboss.near/widget/ZKEVM.AAVE?tab=borrow";
 }
 
-if (isSupply && !!state.selectClose) {
+if (isSupply && (!!state.selectClose || state?.hintList?.length === 1)) {
   link = "/ref-bigboss.near/widget/ZKEVM.AAVE";
 }
 
@@ -292,7 +307,7 @@ return (
         <div
           className="input-button"
           style={{
-            opacity: state.selectClose ? 1 : 0.3,
+            opacity: 0.3,
           }}
         >
           Execute
