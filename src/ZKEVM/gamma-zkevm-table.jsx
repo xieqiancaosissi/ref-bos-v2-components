@@ -181,12 +181,12 @@ const Table = styled.table`
     &:last-of-type {
       border-bottom: none;
     }
-    &:hover {
-      background: rgba(53, 55, 73, 0.5);
-    }
     th:first-child, td:first-child{
       padding-left:26px;
     }
+  }
+  tbody tr:hover{
+    background: rgba(53, 55, 73, 0.5);
   }
 `;
 

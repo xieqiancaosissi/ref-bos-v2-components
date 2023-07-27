@@ -38,7 +38,7 @@ return (
         style: {
           marginTop: "10px",
         },
-        title: "Assets to supply",
+        title: "Assets to Supply",
         body:
           !assetsToSupply || assetsToSupply.length === 0 ? (
             <Widget
@@ -59,7 +59,7 @@ return (
                     "Asset",
                     "Wallet Balance",
                     "Supply APY",
-                    "Can be Collateral",
+                    "Collateral",
                     "",
                   ],
                   data: assetsToSupply.map((row) => [
@@ -85,7 +85,7 @@ return (
                     </div>,
                     <span className="primaryStyle">{(Number(row.supplyAPY) * 100).toFixed(2)}%</span>,
                     <div style={{ paddingLeft: "50px" }}>
-                      {row.isIsolated && "—"}
+                      {row.isIsolated && ""}
                       {!row.isIsolated && (
                         <>
                           {row.usageAsCollateralEnabled && (

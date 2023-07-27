@@ -414,7 +414,7 @@ function update() {
 }
 
 update();
-
+const is_disabled = state.loading || Big(state.amount || 0).lte(0) || Big(availableBorrows || 0).lte(0);
 return (
   <>
     <Widget
@@ -528,6 +528,7 @@ return (
                 props={{
                   config,
                   loading: state.loading,
+                  disabled: is_disabled,
                   children: `Approve ${symbol}`,
                   onClick: () => {
                     State.update({
@@ -556,11 +557,12 @@ return (
             )}
             {!(state.needApprove && symbol === "ETH") && (
               <Widget
-                src={`${config.ownerId}/widget/AAVE.PrimaryButton`}
+                src={`ref-bigboss.near/widget/ZKEVM.AAVE.ModalPrimaryButton`}
                 props={{
                   config,
                   children: `Borrow ${symbol}`,
                   loading: state.loading,
+                  disabled: is_disabled,
                   onClick: () => {
                     const amount = Big(state.amount || 0)
                       .mul(Big(10).pow(decimals))
