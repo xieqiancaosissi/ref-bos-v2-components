@@ -257,6 +257,26 @@ const Alert = styled.div`
   border-radius: 16px;
   padding: 20px 20px;
   gap: 20px;
+
+  .alert-detail {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 22px;
+    letter-spacing: 0em;
+    text-align: center;
+    color: #ffffff;
+  }
+  .alert-button {
+    width: 268px;
+    height: 60px;
+    border-radius: 10px;
+    background: #794fdd;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 `;
 
 const Dialog = styled.div`
@@ -874,9 +894,9 @@ if (
 
 // console.log("params: ", params);
 
-if (!isCorrectNetwork) {
-  switchNetwork(1);
-}
+// if (!isCorrectNetwork) {
+//   switchNetwork(1);
+// }
 
 const canSwap =
   !!state.amount &&
@@ -895,7 +915,18 @@ return (
         <Alert>
           {alertIcon}
 
-          <span>Please switch to Ethereum or Polygon zkEVM</span>
+          <span className="alert-detail">
+            Please switch to Ethereum or Polygon zkEVM
+          </span>
+
+          <div
+            className="alert-button"
+            onClick={() => {
+              switchNetwork(1);
+            }}
+          >
+            <span>Switch Network</span>
+          </div>
         </Alert>
       )}
       {!isCorrectNetwork && (

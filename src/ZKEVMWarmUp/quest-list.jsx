@@ -181,23 +181,6 @@ const myQuestList = JSON.parse(fetchBody)?.data || [];
 
 console.log("myQuestList: ", myQuestList);
 
-// const loadList = () => {
-//   asyncFetch(quest_url).then((res) => {
-//     const resQuest = JSON.parse(res.body);
-
-//     if (Number(resQuest.code) == 0) {
-//       State.update({
-//         questLoadDone: true,
-//         myQuestList: resQuest.data,
-//       });
-//     }
-//   });
-// };
-
-// if (!state.myQuestList) {
-//   loadList();
-// }
-
 const onDelete = (action_id) => {
   asyncFetch("https://bos-api.ref-finance.com/delete-action-by_id", {
     method: "DELETE",
@@ -209,18 +192,26 @@ const onDelete = (action_id) => {
     }),
   }).then((res) => {
     if (res.status === 200) {
-      loadList();
+      State.update({
+        notShowing: {
+          [action_id]: true,
+        },
+      });
     }
   });
 };
 
-if (myQuestList.length === 0) {
+const realList = myQuestList.filter((item) => {
+  return !state.notShowing?.[item.action_id];
+});
+
+if (realList.length === 0) {
   return noQuestTip;
 }
 
 return (
   <CardListWrapper>
-    {myQuestList.map((item, index) => {
+    {realList.map((item, index) => {
       return (
         <Widget
           key={item.action_id + "-" + index}

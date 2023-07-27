@@ -232,7 +232,7 @@ const QuestCardWrapper = styled.div`
     color: white;
     position: absolute;
     top: 150px;
-
+    z-index: 9999;
     padding: 12px;
     padding-top: 18px;
 

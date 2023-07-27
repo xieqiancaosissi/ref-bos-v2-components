@@ -59,26 +59,34 @@ const Layout = styled.div`
   position: fixed;
   bottom: -20px;
   right: 120px;
+
+  .tip-wrapper {
+    position: fixed;
+    bottom: 50px;
+    right: 27%;
+  }
 `;
 
 const Wrapper = styled.div`
-  border: 1px solid #eaf45a;
-  width: 399px;
-  height: 107px;
-  border-radius: 16px;
-  padding: 16px;
-  font-size: 18px;
+  width: 100%;
+  padding: 16px 0px;
+  font-size: 16px;
   font-weight: 500;
   line-height: 22px;
   letter-spacing: 0em;
   text-align: left;
-  color: white;
+  color: #000000;
   display: flex;
-
+  background: linear-gradient(180deg, #eef3bf 0%, #e9f456 100%);
   gap: 16px;
-
+  position: fixed;
+  align-items: center;
+  justify-content: center;
+  right: 0px;
+  height: 42px;
+  bottom: 0;
   .highlight {
-    color: #eaf45a;
+    color: #000000;
     text-decoration: underline;
     font-weight: 700;
   }
@@ -91,6 +99,7 @@ const Wrapper = styled.div`
     position: relative;
     flex-shrink: 0;
     cursor: pointer;
+    background: #181a27;
     .button-dark-circle {
       width: 19px;
       height: 19px;
@@ -110,7 +119,9 @@ const Wrapper = styled.div`
     border-radius: 20px;
     border: 1px solid #979abe;
     position: relative;
-    background: linear-gradient(180deg, #eef3bf 0%, #e9f456 100%);
+
+    background: linear-gradient(90deg, #794fdd 0%, #4c25a9 100%);
+
     cursor: pointer;
 
     .button-light-circle {
@@ -120,7 +131,7 @@ const Wrapper = styled.div`
       width: 19px;
       height: 19px;
       border-radius: 100%;
-      background: #332c4b;
+      background: linear-gradient(180deg, #eef3bf 0%, #e9f456 100%);
     }
   }
 `;
@@ -141,7 +152,7 @@ const onCancel = () => {
 
 return (
   <Layout>
-    {addToQuestTip}
+    <div className="tip-wrapper">{addToQuestTip}</div>
 
     <Wrapper>
       <div>

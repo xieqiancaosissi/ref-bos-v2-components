@@ -2,6 +2,7 @@ const CardListWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: ${(props) => (props.isMyQuest ? "18px" : "32px")};
+  flex-wrap: wrap;
 `;
 
 const sender = Ethers.send("eth_requestAccounts", [])[0];
