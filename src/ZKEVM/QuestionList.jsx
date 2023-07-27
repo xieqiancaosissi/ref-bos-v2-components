@@ -131,6 +131,7 @@ const Back = styled.a`
 State.init({
   hotActionList: [],
   searchActionList: [],
+  keywords: ''
 });
 function get_hot_action_list() {
   asyncFetch(
@@ -155,21 +156,34 @@ function searchBykeyWords(e) {
   });
   State.update({
     searchActionList: search_result,
+    keywords: value,
   });
 }
 function get_item_title(action) {
   const { action_title } = action;
+  const title_low = action_title.toLowerCase();
+  const key_low = state.keywords.toLowerCase();
+  const start_key_index = title_low.indexOf(key_low);
+  const end_key_index = start_key_index + key_low.length;
+  
+  const result = [];
   const arr = action_title.split(" ");
-  if (Number(arr[1])) {
-    return (
-      <>
-        {arr[0]} <label className="num">{arr[1]}</label>{" "}
-        {arr.slice(2).join(" ")}{" "}
-      </>
-    );
-  } else {
-    return action_title;
-  }
+  arr.forEach((split) => {
+    const start_split_index = action_title.indexOf(split);
+    const end_split_index = start_split_index + split.length;
+    const start_index = Math.max(start_key_index, start_split_index);
+    const end_index = Math.min(end_key_index, end_split_index);
+    if (end_index > start_index) { // hit
+      result.push(<span style={{color:'#E9F456'}}>{split}</span>, ' ')
+    } else { // not hit
+      if (Number(split)) {
+        result.push(<label className="num">{split}</label>, ' ')
+      } else {
+        result.push(split, ' ');
+      } 
+    }
+  })
+  return result;
 }
 const template_icons = {
   ZkEvm:
