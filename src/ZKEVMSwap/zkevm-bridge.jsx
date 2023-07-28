@@ -542,24 +542,32 @@ if (!sender) {
 if (chainId === undefined) return <div />;
 
 return (
-  <Container>
-    <Widget
-      src="ref-bigboss.near/widget/ZKEVMSwap.zkevm-bridge-transactions"
-      props={{ tokens }}
-    />
+  <>
+    <Container>
+      <Widget
+        src="ref-bigboss.near/widget/ZKEVMSwap.zkevm-bridge-transactions"
+        props={{ tokens }}
+      />
 
-    <Widget
-      src="ref-bigboss.near/widget/ZKEVMSwap.zkevm-bridge-ui"
-      props={{
-        ...props,
-        onConfirm,
-        onUpdateToken,
-        onChangeAmount,
-        tokens,
-        chainId,
-        updateChainId: (chainId) => State.update(chainId),
-      }}
-    />
+      <Widget
+        src="ref-bigboss.near/widget/ZKEVMSwap.zkevm-bridge-ui"
+        props={{
+          ...props,
+          onConfirm,
+          onUpdateToken,
+          onChangeAmount,
+          tokens,
+          chainId,
+          updateChainId: (chainId) => State.update(chainId),
+        }}
+      />
+
+      <Widget
+        src="ciocan.near/widget/toast"
+        props={{ open: isToastOpen, variant, title, description, onOpenChange }}
+      />
+    </Container>
+
     <Widget
       src="ref-bigboss.near/widget/ZKEVMWarmUp.add-to-quest-card"
       props={{
@@ -567,9 +575,5 @@ return (
         onChangeAdd: state.onChangeAdd,
       }}
     />
-    <Widget
-      src="ciocan.near/widget/toast"
-      props={{ open: isToastOpen, variant, title, description, onOpenChange }}
-    />
-  </Container>
+  </>
 );
