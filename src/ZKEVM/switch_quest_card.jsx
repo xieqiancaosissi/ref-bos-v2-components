@@ -82,7 +82,7 @@ const addToQuestTip = <svg width="289" height="96" viewBox="0 0 289 96" fill="no
 </defs>
 </svg>
 
-const questionSwitch = Storage.get("zkevm-aave-question-switch", "ref-bigboss.near/widget/ZKEVM.switch_quest_card");
+const questionSwitch = Storage.get("zkevm-aave-question-switch");
 if (questionSwitch !== null) {
   State.init({
     switch: questionSwitch == 'on' ? true: false,

@@ -167,7 +167,7 @@ function updateGas() {
 }
 
 updateGas();
-const questionSwitch = Storage.get("zkevm-aave-question-switch");
+const questionSwitch = Storage.get("zkevm-aave-question-switch", "ref-bigboss.near/widget/ZKEVM.switch_quest_card");
 
 const maxValue = Big(availableBorrows).toFixed(decimals);
 const eth_account_id = Ethers.send("eth_requestAccounts", [])[0];
