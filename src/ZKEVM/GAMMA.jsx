@@ -2,6 +2,7 @@ State.init({
   activePair: defaultPair,
   isPoolFetching: false,
   isUserPositionsFetching: false,
+  chainId: '',
 });
 
 const sender = Ethers.send("eth_requestAccounts", [])[0];
@@ -34,7 +35,12 @@ if (!sender)
     </ContainerLogin>
   );
 
-const { chainId } = Ethers.getNetwork();
+// const { chainId } = Ethers.getNetwork();
+Ethers.provider().getNetwork().then((data) => {
+  State.update({
+    chainId: data.chainId
+  })
+})
 const chainIdToSwitch = "0x44D";
 
 const switchChain = () => {
@@ -75,7 +81,7 @@ const SwitchWrapper = styled.div`
   }
 `;
 
-if (chainId !== 1101) {
+if (state.chainId !== 1101) {
   return (
     <SwitchWrapper>
       <img src="https://ipfs.near.social/ipfs/bafkreibmhq4fseqpcbywiq4hfojghxvhj47mjsri2trggt7d5h5od4y6kq"></img>
