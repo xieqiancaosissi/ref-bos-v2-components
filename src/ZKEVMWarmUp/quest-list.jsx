@@ -194,6 +194,7 @@ const onDelete = (action_id) => {
     if (res.status === 200) {
       State.update({
         notShowing: {
+          ...state.notShowing,
           [action_id]: true,
         },
       });
