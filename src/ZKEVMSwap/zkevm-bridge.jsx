@@ -387,12 +387,14 @@ const handlePermit = (props) => {
     ],
   };
 
+  const amountBig = ethers.utils.parseUnits(amount.toString(), token.decimals);
+
   const values = {
     deadline: MAX_AMOUNT,
     nonce: state.nonce || 0,
     owner: sender,
     spender: BRIDGE_CONTRACT_ADDRESS,
-    value: ethers.BigNumber.from(amount),
+    value: amountBig,
   };
 
   Ethers.provider()
@@ -454,20 +456,13 @@ const handlePermit = (props) => {
 
       const permit = erc20Iface.encodeFunctionData(
         "permit(address,address,uint256,uint256,uint8,bytes32,bytes32)",
-        [
-          sender,
-          BRIDGE_CONTRACT_ADDRESS,
-          ethers.BigNumber.from(amount),
-          MAX_AMOUNT,
-          v,
-          r,
-          s,
-        ]
+        [sender, BRIDGE_CONTRACT_ADDRESS, amountBig, MAX_AMOUNT, v, r, s]
       );
 
       console.log("permitData", permit);
       handleBridge({ ...props, permit });
-    });
+    })
+    .catch(() => {});
 };
 
 const approve = (props) => {
