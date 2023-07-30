@@ -107,7 +107,7 @@ return <Container>
     {
       !state.switch && addToQuestTip
     }
-    Add to <a className="highlight" href="/warmup">ZkEVM Warm up [My Quest]</a> after transaction
+    Sync to <a className="highlight" href="/warmup">ZkEVM Warm up [My Quest]</a> after transaction
     {!state.switch && (
         <div className="button-dark" onClick={onAdd}>
           <div className="button-dark-circle"></div>
