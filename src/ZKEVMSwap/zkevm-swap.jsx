@@ -113,6 +113,7 @@ State.init({
     });
   },
   add: false,
+  hasGetStorage: false,
 });
 
 const refReferralId = props.refReferralId ?? "ukraine";
@@ -682,9 +683,13 @@ if (forceNetwork && state.network && forceNetwork !== state.network) {
   );
 }
 
-const params = Storage.get("zk-evm-swap-params");
+const params = Storage.get(
+  "zk-evm-swap-params",
+  "ref-bigboss.near/widget/ZKEVMWarmUp.quest-card"
+);
+console.log("swap params: ", params);
 
-if (params && !!state.sender && selectedChainId === 1101) {
+if (params && selectedChainId === 1101 && state.hasGetStorage === false) {
   if (!!params?.amount && !!params?.assetId) {
     State.update({
       inputAssetAmount: params.amount,
@@ -701,7 +706,9 @@ if (params && !!state.sender && selectedChainId === 1101) {
     switchNetwork(1101, params.dexName);
   }
 
-  Storage.set("zk-evm-swap-params", {});
+  State.update({
+    hasGetStorage: true,
+  });
 }
 
 function add_action(param_body) {

@@ -366,13 +366,21 @@ if (isBorrow || isRepay) {
 }
 
 const onSaveParams = () => {
+  console.log("on save params");
+
   if (isBridge) {
+    console.log("isBridge: ", isBridge);
     const [action_type, symbol, from, chain] = arr;
 
     Storage.set("zk-evm-bridge-params", {
       symbol,
       chain,
     });
+
+    console.log(
+      "Storage.get('zk-evm-bridge-params'): ",
+      Storage.get("zk-evm-bridge-params")
+    );
   }
 
   if (isSwap) {
@@ -387,6 +395,11 @@ const onSaveParams = () => {
       dexName: dexName1 + (dexName2 ? " " + dexName2 : ""),
       assetId: token.address,
     });
+
+    console.log(
+      "Storage.get('zk-evm-swap-params'): ",
+      Storage.get("zk-evm-swap-params")
+    );
   }
 };
 

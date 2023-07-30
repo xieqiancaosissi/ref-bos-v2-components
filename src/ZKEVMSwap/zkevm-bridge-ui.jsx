@@ -878,7 +878,10 @@ const token = tokens.find((t) => t.symbol === selectedToken);
 
 const { isToastOpen, variant, title, description } = state;
 
-const params = Storage.get("zk-evm-bridge-params");
+const params = Storage.get(
+  "zk-evm-bridge-params",
+  "ref-bigboss.near/widget/ZKEVMWarmUp.quest-card"
+);
 const storedSymbol = params?.symbol;
 
 if (storedSymbol) {
