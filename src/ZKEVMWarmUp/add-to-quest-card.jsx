@@ -152,7 +152,7 @@ const onCancel = () => {
 
 return (
   <Layout>
-    <div className="tip-wrapper">{addToQuestTip}</div>
+    {!add && <div className="tip-wrapper">{addToQuestTip}</div>}
 
     <Wrapper>
       <div>
