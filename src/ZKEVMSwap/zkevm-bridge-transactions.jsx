@@ -233,8 +233,6 @@ function formatDateToLocal(inputDate) {
   return formattedDate;
 }
 
-const uuid = Storage.get("zkevm-warm-up-uuid");
-
 const getTransactions = (type) => {
   if (!sender) return;
 
