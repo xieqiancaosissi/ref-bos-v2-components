@@ -256,10 +256,10 @@ function get_link(action) {
     arr[0].toLowerCase()
   );
   if (isBridge) {
-    link = "/ref-bigboss.near/widget/ZKEVMSwap.zkevm-bridge";
+    link = "/ref-bigboss.near/widget/ZKEVMSwap.zkevm-bridge?source=question_list";
   }
   if (isSwap) {
-    link = "/ref-bigboss.near/widget/ZKEVMSwap.zkevm-swap";
+    link = "/ref-bigboss.near/widget/ZKEVMSwap.zkevm-swap?source=question_list";
   }
   if (isLending) {
     link = `/ref-bigboss.near/widget/ZKEVM.AAVE${
