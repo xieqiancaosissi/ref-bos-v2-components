@@ -55,8 +55,12 @@ const VStackNoColor = styled.div`
 `;
 
 const Comment = styled.span`
-  font-size: 12px;
-  color: ${(props) => (props.isError ? "#E25D58" : "#fff")};
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size: 14px;
+  margin-bottom:12px;
+  color: ${(props) => (props.isError ? "#E25D58" : "#7C7F96")};
 `;
 
 const Wrapper = styled.div`
@@ -642,7 +646,7 @@ return (
             </div>
           </InputWrapper>
           <VStackNoColor>
-            {/* {isLoading && <Comment isError={isError}>{loadingMsg}</Comment>} */}
+            {isLoading && <Comment isError={isError}>{loadingMsg}</Comment>}
             {isInSufficient && <Button disabled>InSufficient Balance</Button>}
             {!isInSufficient &&
               (isToken0Approved &&
@@ -705,7 +709,7 @@ return (
             </div>
           </InputWrapper>
           <VStack>
-            {/* {isLoading && <Comment isError={isError}>{loadingMsg}</Comment>} */}
+            {isLoading && <Comment isError={isError}>{loadingMsg}</Comment>}
             <Button
               disabled={isWithdrawInsufficient || isLoading || !lpAmount}
               onClick={handleWithdraw}
