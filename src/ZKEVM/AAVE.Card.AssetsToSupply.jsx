@@ -38,7 +38,7 @@ return (
         style: {
           marginTop: "10px",
         },
-        title: "Assets to Supply",
+        title: "Assets to supply",
         body:
           !assetsToSupply || assetsToSupply.length === 0 ? (
             <Widget
@@ -68,8 +68,8 @@ return (
                       props={{
                         children: [
                           <img
-                            width={32}
-                            height={32}
+                          width={32}
+                          height={32}
                             src={`https://app.aave.com/icons/tokens/${row.symbol.toLowerCase()}.svg`}
                           />,
                           <div>
@@ -85,24 +85,15 @@ return (
                     </div>,
                     <span className="primaryStyle">{(Number(row.supplyAPY) * 100).toFixed(2)}%</span>,
                     <div style={{ paddingLeft: "50px" }}>
-                      {row.isIsolated && ""}
-                      {!row.isIsolated && (
-                        <>
-                          {row.usageAsCollateralEnabled && (
-                            <img
-                              src={`${config.ipfsPrefix}/bafkreibsy5fzn67veowyalveo6t34rnqvktmok2zutdsp4f5slem3grc3i`}
-                              width={16}
-                              height={16}
-                            />
-                          )}
-                          {!row.usageAsCollateralEnabled && (
-                            <img
-                              src={`${config.ipfsPrefix}/bafkreie5skej6q2tik3qa3yldkep4r465poq33ay55uzp2p6hty2ifhkmq`}
-                              width={16}
-                              height={16}
-                            />
-                          )}
-                        </>
+                      {(row.isIsolated ||
+                        (!row.isIsolated && !row.usageAsCollateralEnabled)) &&
+                        ""}
+                      {!row.isIsolated && row.usageAsCollateralEnabled && (
+                        <img
+                          src={`${config.ipfsPrefix}/bafkreibsy5fzn67veowyalveo6t34rnqvktmok2zutdsp4f5slem3grc3i`}
+                          width={16}
+                          height={16}
+                        />
                       )}
                     </div>,
                     <SupplyButton data={row} />,

@@ -2,9 +2,9 @@ const { onLoad } = props;
 
 const sender = Ethers.send("eth_requestAccounts", [])[0];
 
-const quest_url = `https://bos-api.ref-finance.com/get-action-by-account?account_id=${sender}&account_info=''`;
+const quest_url = `https://bos-api.delink.one/get-action-by-account?account_id=${sender}&account_info=''`;
 
-const trend_url = "https://bos-api.ref-finance.com/get-hot-action";
+const trend_url = "https://bos-api.delink.one/get-hot-action";
 
 let myQuestList = [];
 
